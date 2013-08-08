@@ -36,6 +36,10 @@ MEMBERS = \
 	lib$(LIB).a(updat.o) \
 	lib$(LIB).a(updat2.o) \
 	lib$(LIB).a(update.o) \
+	lib$(LIB).a(qtest.o) \
+	lib$(LIB).a(qtest2.o) \
+	lib$(LIB).a(qtest3.o) \
+	lib$(LIB).a(qtest4.o) \
 	lib$(LIB).a(timer.o)
 
 lib$(LIB).a:: $(MEMBERS)
