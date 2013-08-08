@@ -1,0 +1,44 @@
+
+
+
+June 21, 1991
+
+
+                              ANNOUNCEMENT
+
+
+                              PLEASE NOTE!
+
+
+New data and user reports have revealed that observed PKPdf travel times in the
+distance range 145 to 180 degrees are 2 to 3 seconds later than travel times
+predicted by the iasp91 model. To correct this problem the velocity of the
+inner core has to be reduced. A new model iasp91a has been produced in which 
+the velocity in the inner core has been reduced by 0.12 km/s. This will give  
+a shift in PKPdf which reaches 2.5s at 180 degrees.
+
+To convert the old iasp91 model to the new iasp91a model a single change is
+needed in the common block for P in the file emiasp91.f.
+
+replace
+      data p/11.24094,10.03904,14.49470,25.1486 ,25.969838,29.38896,
+
+by
+      data p/11.12094,10.03904,14.49470,25.1486 ,25.969838,29.38896,
+
+Thence, rerun all the programs needed to produce tables for the user interface.
+
+Only the df branch of core phases is affected by the change so that the IASP91
+SEISMOLOGICAL TABLES remain useful for all other phases. A supplement to the
+TABLES will be prepared to allow the correction of PKPdf if so desired.
+
+We are also considering the publication of the revised tables for PKPdf with
+the displays which led to the need for a change as a research note.
+
+Further feedback on the iasp91 model from users is strongly encouraged!
+
+
+B.L.N. Kennett
+E.R. Engdahl
+R. Buland
+
