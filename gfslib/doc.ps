@@ -1,0 +1,517 @@
+%!PS-Adobe-1.0
+%%Creator: aslwsd:bolton (Harold Bolton)
+%%Title: doc.gfs
+%%CreationDate: Tue Aug  5 10:37:41 1997
+%%DocumentFonts: Courier-Bold Courier
+% Start of enscript.pro -- prolog for text file translator
+% Copyright (c) 1984,1985,1987 Adobe Systems Incorporated. All Rights Reserved. 
+% GOVERNMENT END USERS: See Notice file in TranScript library directory
+% -- probably /usr/lib/ps/Notice
+% RCSID: $Header: enscript.pro,v 2.2 87/11/17 16:39:56 byron Rel $
+save/EnscriptJob exch def
+/StartEnscriptDoc{$enscript begin}def
+/$enscript 50 dict def $enscript begin
+/EndEnscriptDoc{end}def
+/S/show load def
+/X{exch 0 rmoveto S}def
+/Y{exch 0 exch rmoveto S}def
+/B{3 1 roll moveto S}def
+/F{$fd exch get setfont}def
+/StartPage{/svpg save def .05 dup scale}def
+/EndPage{svpg restore showpage}def
+/DoPreFeed{/statusdict where{pop
+ statusdict/prefeed known{statusdict exch/prefeed exch put 0}if}if pop}def
+/Landscape{90 rotate 0 -15840 translate}def
+/SetUpFonts
+ {dup/$fd exch array def{findfont exch scalefont $fd 3 1 roll put}repeat}def
+/InitGaudy{/TwoColumn exch def /BarLength exch def
+ /ftD /Times-Bold findfont 12 UP scalefont def
+ /ftF /Times-Roman findfont 14 UP scalefont def
+ /ftP /Helvetica-Bold findfont 30 UP scalefont def}def
+/U{1440 mul}def
+/UP{U 72 div}def
+/LB{/pts exch UP def /charcolor exch def /boxcolor exch def /font exch def
+ /label exch def /dy exch def /dx exch def /lly exch def /llx exch def
+ gsave boxcolor setgray
+ llx lly moveto dx 0 rlineto 0 dy rlineto dx neg 0 rlineto closepath fill
+ /lines label length def
+ /yp lly dy add dy lines pts mul sub 2 div sub pts .85 mul sub def
+ font setfont charcolor setgray
+ label {dup stringwidth pop 2 div llx dx 2 div add exch sub yp moveto show
+   /yp yp pts sub def}forall grestore}def
+/Gaudy{/Page exch def /Date exch def /File exch def /Comment exch def
+ .25 U 10.2 U BarLength .1 sub U .25 U [File] ftF .97 0 14 LB
+ .25 U 10.45 U BarLength .1 sub U .25 U [Comment] ftF 1 0 14 LB
+ .25 U 10.2 U 1 U .5 U Date ftD .7 0 12 LB
+ BarLength .75 sub U 10.2 U 1 U .5 U [Page] ftP .7 1 30 LB
+ TwoColumn{BarLength 2 div .19 add U 10.2 U moveto 0 -10 U rlineto stroke}if
+}def
+end
+StartEnscriptDoc % end fixed prolog
+1 200 /Courier-Bold
+0 160 /Courier
+2 SetUpFonts
+%%EndProlog
+%%Page: ? 1
+StartPage
+Landscape
+1 F
+360 14790 (doc.gfs        Fri Jan 13 13:33:43 1995        1)B
+0 F
+840 14430(GFS \(Rev.2\))B
+1224 14250(GFS is a disc file system designed primarily for storing seismic)B
+1128 14070(data. The program is in an experimental stage and all errors or)B
+1128 13890(desired modifications should be addressed to Guy Masters.)B
+1224 13710(Revision history)B
+1320 13530(Dec 1986 exception handler installed to avoid the mangling of )B
+1128 13350(GFS directories during an unusual program exit \(e.g. ctrl Q \).)B
+1320 13170(May 1987 include special time format in search procedures)B
+840 12810(File Structure)B
+1224 12450(The structure of a GFS file is the usual one, i.e., a number of time)B
+1128 12270(series with header information for each time series stored in a)B
+1128 12090(directory. The file system does have some novel features. A GFS file )B
+360 11910(is)B
+1128 11730(actually an Apollo directory and the directory and individual time)B
+1128 11550(series are separate Apollo files. This means that each time series)B
+1128 11370(can be extended or deleted without affecting any of the other time)B
+1128 11190(series. The file system also allows the user to define any number of)B
+1128 11010(header structures through a user supplied routine DEFHDR \( see )B
+1128 10830(section 5\). Finally, rudimentary database software is included for )B
+1128 10650(rapid access of time series with desired attributes.)B
+1224 10470(The directory is an Apollo fixed length record, binary file and allo)B
+360 10290(ws)B
+1128 10110(rapid random access of any particular header.The time series are stor)B
+360 9930(ed)B
+1128 9750(as Apollo undefined record structure, binary files, i.e., individual)B
+1128 9570(time series are stored as continuous bit streams and can be arbitrari)B
+360 9390(ly)B
+1128 9210(long. This makes random io within a time series easy and also allows)B
+1128 9030(easy extension of time series. The number of time series that can be)B
+1128 8850(stored in a GFS file is currently limited to 1,265 \(the limit on the)B
+1128 8670(number of entries in an Apollo directory is 1,266\).)B
+1224 8490(The file system works on the unit number principle \(similar to FORTR)B
+360 8310(AN)B
+1128 8130(io routines\). Currently you are allowed up to 10 units open by a sing)B
+360 7950(le)B
+1128 7770(program. Each unit number can have a different header definition so y)B
+360 7590(ou)B
+1128 7410(can define file structures of different types and use the same GFS)B
+1128 7230(routines to access them.)B
+1224 7050(When a file is opened, the directory is opened and left opened until)B
+1128 6870(the file is closed. Routines are available which allow you to search)B
+1128 6690(the directory for time series which have desired attributes \(see )B
+1128 6510(section 6\). You can then access the desired time series but presently)B
+1128 6330(you can access only one time series on a particular unit number at)B
+1128 6150(once.                                                          )B
+1224 5970(Routines are available which work at various levels within the file)B
+1128 5790(structure. A description of the routines which might be useful to the)B
+1128 5610(user now follows. Note that all integers in GFS calls are i*4.)B
+840 5250(Summary of GFS routines)B
+1128 4890(GFS_OPEN    - opens a GFS file)B
+1128 4710(GFS_OPENA   - opens a GFS file \(for interactive use\))B
+1128 4530(GFS_CLOSE   - closes or deletes a GFS file)B
+1128 4350(GFS_ERASE   - erases contents of a GFS file \(leaving it open\))B
+1128 4170(GFS_RWENTRY - reads,writes or replaces complete time series + headers)B
+8688 14430(GFS_DENTRY  - deletes a time series and its associated header)B
+8688 14250(GFS_CENTRY  - copies a time series and its associated header)B
+8688 14070(GFS_RWDIR   - reads,writes or replaces headers in the directory)B
+8688 13890(GFS_RWDATA  - reads or writes within a time series)B
+8688 13710(GFS_PHDEF   - prints user defined search attributes)B
+8688 13530(GFS_SDEF    - allows interactive input of a set of search attributes)B
+8688 13350(GFS_SEARCH  - selects time series which match a given set of attribute)B
+7920 13170(s)B
+8688 12990(GFS_SWAP    - interchanges two entries whithin a single GFS file )B
+8688 12810(DEFHDR      - user supplied routine defining header structures)B
+8688 12630(PRHDR       - user supplied routine to print headers)B
+8400 12270(1\) Routines which operate on GFS files.)B
+8688 11910(GFS_OPEN\(io,name,itype,iret\))B
+8880 11730(io - unit number in the range 1 to 10 \(no conflict with FORTRAN unit)B
+9360 11550(numbers\))B
+8880 11370(name - up to 256 character treename or leafname. \(If this is read in)B
+9360 11190(interactively, remember to blank out the character array before)B
+9360 11010(input - or use routine GFS_OPENA described below\))B
+8880 10830(itype - a positive integer which defines the header type of this fil)B
+7920 10650(e)B
+9360 10470(\(see section 5\). itype is input if you are opening a new file)B
+9360 10290(and is returned if you are opening an existing file.)B
+8880 10110(iret - return code)B
+8688 9930(description - creates a GFS file if it doesn't exist and opens the)B
+8688 9750(directory. Opens GFS file if it does exist and opens the directory. No)B
+8688 9570(overwriting is performed when an existing file is opened. If iret is)B
+8688 9390(negative, a fatal error has occured, if iret is zero, a new file with)B
+8688 9210(header type 'itype' has been successfully opened, if iret is greater)B
+8688 9030(than zero, an existing file with iret entries has been successfully)B
+8688 8850(opened and the header type 'itype' is returned.)B
+8688 8490(GFS_OPENA\(io,remark,itype,iret\))B
+8880 8310(io - unit number)B
+8880 8130(remark - a character string enclosed in single quotes)B
+8880 7950(itype - as in GFS_OPEN)B
+8880 7770(iret - as in GFS_OPEN)B
+8688 7590(description - a version of GFS_OPEN for interactive use, remark is)B
+8688 7410(printed on the screen and the system waits for you to input the file)B
+8688 7230(name. Remark would typically be 'input file name :' or some other)B
+8688 7050(profound comment.)B
+8688 6690(GFS_CLOSE\(io\))B
+8880 6510(io - unit number)B
+8688 6330(description - closes file on unit io, so releasing this unit for)B
+8688 6150(future use. If a file is empty or if -io is input, the routine)B
+8688 5970(deletes the file on unit io.)B
+8688 5610(GFS_ERASE\(io\))B
+8880 5430(io - unit number)B
+8688 5250(description - erases the contents of the file on unit io without)B
+8688 5070(closing it. This routine can be called straight after GFS_OPEN to )B
+8688 4890(ensure that a file is empty before writing.)B
+8400 4530(2\) Routines which operate on directories and time series)B
+8688 4170(GFS_RWENTRY\(io,hdr,buf,k,op\))B
+EndPage
+%%Page: ? 2
+StartPage
+Landscape
+1 F
+360 14790 (doc.gfs        Fri Jan 13 13:33:43 1995        2)B
+0 F
+1320 14430(io - unit number)B
+1320 14250(hdr - first element of header array)B
+1320 14070(buf - first element of data array)B
+1320 13890(k - index of entry to be read or written.)B
+1320 13710(op - a lowercase character enclosed in single quotes \(see below\))B
+1128 13530(description - a canned routine for reading,writing or replacing)B
+1128 13350(complete time series and their associated headers.)B
+1128 13170(If op='r' the k'th time series is read into buf and its header is rea)B
+360 12990(d)B
+2088 12810(into hdr.)B
+1128 12630(If op='w' and k is set to zero or is greater than the number of )B
+2088 12450(existing entries in the file, the new time series in buf is)B
+2088 12270(appended to the file and the directory is updated with the)B
+2088 12090(header information in hdr.)B
+1128 11910(If op='w' and k is the index of an existing entry, the time series an)B
+360 11730(d)B
+2088 11550(its associated header in the directory are overwritten with)B
+2088 11370(the contents of buf and hdr respectively. The new time seri)B
+360 11190(es)B
+2088 11010(does not have to be the same length as the old one.)B
+1128 10650(GFS_DENTRY\(io,k\))B
+1320 10470(io - unit number)B
+1320 10290(k - index of entry to be deleted)B
+1128 10110(description - deletes the k'th time series in the file on unit io and)B
+1128 9930(updates the directory accordingly.)B
+1128 9570(GFS_CENTRY\(io,io1,k,k1\))B
+1320 9390(io - input unit number)B
+1320 9210(io1 - output unit number)B
+1320 9030(k - index of entry on unit io to be copied)B
+1320 8850(k1 - index of entry on unit io1 to be written or overwritten)B
+1128 8670(description - copies the k'th time series from unit io to unit io1.)B
+1128 8490(If k1 is set to zero or is greater than the number of existing entrie)B
+360 8310(s)B
+1128 8130(on unit io1, the time series is automatically appended to the file on)B
+1128 7950(unit io1 and the directory on unit io1 is updated. If k1 is the index)B
+1128 7770(of an existing entry on unit io1,then this entry is overwritten.)B
+1128 7410(GFS_SWAP\(io,k1,k2\))B
+1320 7230(io - unit number)B
+1320 7050(k1,k2 - index of entries to be interchanged)B
+840 6690(3\) Manipulating the directory)B
+1128 6330(The directory is opened by GFS_OPEN or GFS_OPENA and is closed by)B
+1128 6150(GFS_CLOSE. You may also read,write and replace directory entries)B
+1128 5970(\(headers\) with the following routine.)B
+1128 5610(GFS_RWDIR\(io,hdr,k,op,ierr\))B
+1320 5430(io - unit number)B
+1320 5250(hdr - first element of header array)B
+1320 5070(k - index of header)B
+1320 4890(op - a lowercase character enclosed in single quotes \(see below\))B
+1320 4710(ierr - error code \(zero if successful\))B
+1128 4530(description -)B
+1128 4350(If op='r' the routine will read the k'th header into the array hdr)B
+2088 4170(\(ierr will usually only be non-zero if you try and read a n)B
+7920 14430(on )B
+9648 14250(existant header\))B
+8688 14070(If op='w' and k is zero or is greater than the number of existing)B
+9648 13890(entries, the routine appends a header to the directory.)B
+8688 13710(If op='w' and k is the index of an existing entry, the header of the)B
+9648 13530(k'th time series will be overwritten with the contents of hd)B
+7920 13350(r)B
+8400 12990(4\) Manipulating time series)B
+8688 12630(The following routine is useful when you want to perform random io )B
+8688 12450(within a time series.)B
+8688 12090(GFS_RWDATA\(io,buf,k,n1,nwd,op,ierr\))B
+8880 11910(io - unit number)B
+8880 11730(buf - first element of data array)B
+8880 11550(k - index of time series to be accessed)B
+8880 11370(n1 - index of first data word to be read or written)B
+8880 11190(nwd - number of data words to be read or written)B
+8880 11010(op - a lowercase character enclosed in single quotes \(see below\))B
+8880 10830(ierr - error code \(zero if successful, even on a partial read\))B
+8688 10650(description - )B
+8688 10470(If op='r' the routine reads nwd data points starting at point n1 in)B
+9648 10290(the time series into the array buf. If you try and read past)B
+9648 10110(the end of data, nwd is returned as the actual number of)B
+9648 9930(points read \(ierr will still be zero\))B
+8688 9750(If op='w' the routine writes nwd data points from the array buf into)B
+9648 9570(the file starting at point n1 in the file. You are allowed t)B
+7920 9390(o)B
+9648 9210(to extend the time series past the old end of data but )B
+9648 9030(remember to update the new word count in the appropiate)B
+9648 8850(directory entry using GFS_RWDIR if you do this.)B
+8688 8670(Note that the type of data word has been defined by the user \(see )B
+8688 8490(section 5\) and may be i*2,i*4,r*4,r*8 or complex. n1 and nwd refer to)B
+8688 8310(the user defined word type of the file.)B
+8688 8130(Note also that time series are stored as separate files so GFS_RWDATA)B
+8688 7950(also opens and closes time series. The first call to GFS_RWDATA with a)B
+8688 7770(new value of k first causes any previously opened time series on this)B
+8688 7590(unit number to be closed and then opens the k'th time series. This tim)B
+7920 7410(e)B
+8688 7230(series will remain open until a new time series is accessed by a call )B
+8688 7050(to GFS_RWDATA with a new value of k. When a time series is closed, the)B
+8688 6870(appropriate header in the directory is checked and, if the word count)B
+8688 6690(has changed, an eof is written at the new end of data. You must)B
+8688 6510(therefore update the header \(if appropriate\) before accessing a new)B
+8688 6330(time series on this unit. k must be the index of an existing time)B
+8688 6150(series or, if you are appending a time series, it must have the proper)B
+8688 5970(value that this entry will have in the directory.)B
+8400 5610(5\) User defined routines        )B
+8688 5250(The user must supply at least one routine, DEFHDR, which defines any)B
+8688 5070(number of header structures. A second routine, PRHDR, which prints)B
+8688 4890(headers of a particular type in your favorite format is also required)B
+8688 4710(for many applications.)B
+8688 4350(*** There are two restrictions on header definitions :1\) items in )B
+8688 4170(headers must cover an integral number of 4byte words and 2\) the first)B
+EndPage
+%%Page: ? 3
+StartPage
+Landscape
+1 F
+360 14790 (doc.gfs        Fri Jan 13 13:33:43 1995        3)B
+0 F
+1128 14430(word of the header must be the number of points in the accompanying)B
+1128 14250(time series \(a 4byte integer\) ***)B
+1128 13890(DEFHDR\(io,itype\))B
+1320 13710(io - unit number)B
+1320 13530(itype - type of header definition to be associated with this unit)B
+1896 13350(number \(a positive integer\))B
+1128 13170(description - the routine accesses two common blocks and the first fe)B
+360 12990(w)B
+1128 12810(lines of code look like :)B
+1896 12450(subroutine DEFHDR\(io,itype\))B
+1896 12270(common/hd$$$$/lhed\(10\),nwb\(10\),nfil\(10\),ktype\(10\),kopen\(10\))B
+1896 12090(common/at$$$$/natt\(10\),iatt\(3,20,10\),attrem\(20,10\))B
+1896 11910(character*16 attrem)B
+1896 11730(goto \(10,20,30,.....etc\),itype)B
+1608 11550(10 continue)B
+1320 11370(c  definition of header attributes for itype=1)B
+1896 11190(:)B
+1896 11010(:)B
+1896 10830(return)B
+1608 10650(20 continue)B
+1320 10470(c  definition of header attributes for itype=2)B
+1896 10290(:)B
+1896 10110(etc)B
+1128 9750(For each header type you must set :)B
+1320 9570(lhed\(io\) - the number of 4byte words in the header \(can be larger)B
+2376 9390(than the number actually used\))B
+1320 9210(nwb\(io\) - the number of bytes per data word \(=2 for i*2, =4 for i*4)B
+2376 9030(or r*4, =8 for r*8 or complex\))B
+1320 8850(natt\(io\) - the number of attributes defined for searching. Up to 20)B
+2376 8670(items in the header can be defined as search variables )B
+2376 8490(for use with the selection routines described in sect. 6)B
+360 8310(.)B
+1128 8130(For each defined attribute the following information is required:)B
+1320 7950(attrem\(k,io\) - a 16 character array describing the k'th attribute.)B
+2376 7770(For example, if the second defined attribute is the )B
+2376 7590(station channel, you might set)B
+3432 7410(attrem\(2,io\)='station channel ')B
+1320 7230(iatt\(1,k,io\) - the index of the first 4byte word of the k'th )B
+2376 7050(attribute in the header)B
+1320 6870(iatt\(2,k,io\) - the index of the last 4byte word of the k'th)B
+2376 6690(attribute in the header \(this need only be set if the)B
+2376 6510(attribute is a character string\))B
+1320 6330(iatt\(3,k,io\) - attribute type \(a 4byte integer\). The following)B
+2376 6150(values are possible :)B
+1896 5970(0  character string          )B
+1896 5790(1  integer          \(equality\))B
+1896 5610(2  real*4           \(equality\))B
+1896 5430(3  real*8           \(equality\))B
+1896 5250(4  integer          \(range\))B
+1896 5070(5  real*4           \(range\))B
+1896 4890(6  real*8           \(range\))B
+1896 4710(7  time             \(equality\))B
+1896 4530(8  time             \(range\))B
+1128 4170("equality" means that a search will be successful if the defined)B
+8688 14430(attribute equals an input search variable."range" means that a search)B
+8688 14250(will be successful if the defined attribute falls within an input)B
+8688 14070(range. Character strings are always treated as equalities and each)B
+8688 13890(character attribute to be searched on must be less than 40 characters)B
+8688 13710(long. "time" is a special format and is defined by \(yr,dy,hr,mn,sec\) )B
+8688 13530(\( 4 integers followed by a real \) which must cover 5 consecutive 4byte)B
+7920 13350( )B
+8688 13170(locations in the header.)B
+8688 12810(PRHDR\(nfl,hdr,itype\))B
+8880 12630(nfl - an integer that can be printed with the header to show which)B
+9456 12450(entry in the directory this is.)B
+8880 12270(hdr - first element of header array to be printed)B
+8880 12090(itype - the header type)B
+8688 11910(description - an example of PRHDR is given below and also shows how)B
+8688 11730(headers can be manipulated in code.)B
+9456 11370(subroutine PRHDR\(nfl,hdr,itype\))B
+9456 11190(dimension hdr\(1\),hed1\(50\),hed2\(50\),hed3\(50\), etc)B
+9456 11010(common/myhed1/npts1,nsta,nchn,ntyp,iy,id,ih,im,sec,dt,spare\(40)B
+7920 10830(\))B
+9456 10650(common/myhed2/npts2,......etc)B
+9456 10470(equivalence \(npts1,hed1\),\(npts2,hed2\), etc)B
+9456 10290(goto \(10,20,30,...etc\),itype)B
+9168 10110(10 do 1 i=1,10)B
+9264 9930(1 hed1\(i\)=hdr\(i\))B
+9456 9750(print 900,nfl,nsta,nchn,ntyp,iy,id,ih,im,sec,dt,npts1)B
+9072 9570(900 format\(i5,2x,a4,2x,a4,2x,a4,i6,i4,2i3,2f6.3,i8\))B
+9456 9390(return)B
+9168 9210(20 do 2 i=1,length of second header type)B
+9264 9030(2 hed2\(i\)=hdr\(i\))B
+9456 8850(print 901, etc)B
+8688 8490(Equivalencing an array into the first word of a common block describin)B
+7920 8310(g)B
+8688 8130(your header overlays the common block into that array. The array can)B
+8688 7950(then be read or written using GFS routines.)B
+8400 7590(6\) Selection routines)B
+8688 7230(If you have taken the trouble to define some attributes in DEFHDR, you)B
+8688 7050(can use these to select time series which match some combination of)B
+8688 6870(desired attributes. DEFHDR is called by GFS_OPEN or GFS_OPENA but you)B
+8688 6690(can call it at any time to set up defining attributes. Routines which)B
+8688 6510(use these attributes are :)B
+8688 6150(GFS_PHDEF\(io\))B
+8880 5970(io - unit number)B
+8688 5790(description - prints the comments in the array attrem to remind you)B
+8688 5610(what attributes you have defined for the file on unit io)B
+8688 5250(GFS_SDEF\(io\))B
+8880 5070(io - unit number)B
+8688 4890(description - allows interactive input of search variables. A call to)B
+8688 4710(this routine causes the prompt 'enter search index \(0 quits\)' to be)B
+8688 4530(printed on the screen. Enter the index of the desired attribute. The)B
+8688 4350(routine then expects you to enter an appropriate value or values for)B
+8688 4170(this attribute - this might be a character string or a minimum and)B
+EndPage
+%%Page: ? 4
+StartPage
+Landscape
+1 F
+360 14790 (doc.gfs        Fri Jan 13 13:33:43 1995        4)B
+0 F
+1128 14430(maximum value for an integer, etc. The prompt 'enter search index')B
+1128 14250(will reappear. You can enter up to 40 search variables.\(Some attribut)B
+360 14070(es)B
+1128 13890(may be repeated, e.g., if you want horizontal components and you have)B
+1128 13710(defined station channel as a character attribute with the possible)B
+1128 13530(values VERT,N-S and E-W, you can search simultaneously for time serie)B
+360 13350(s)B
+1128 13170(with station channel equal to N-S or E-W\). If you enter a large integ)B
+360 12990(er)B
+1128 12810(\(e.g., 99\) at the prompt, a list of currently set search variables wi)B
+360 12630(ll)B
+1128 12450(be printed. Items from this list can be removed by typing the negativ)B
+360 12270(e)B
+1128 12090(of the entry number in the list that you want to remove. In this way)B
+1128 11910(you can edit your list of search attributes until you are satisfied)B
+1128 11730(with it. Typing a 0 at the prompt returns control to the calling)B
+1128 11550(program.)B
+1128 11190(GFS_SEARCH\(io,hdr,k,ksrch\))B
+1320 11010(io - unit number)B
+1320 10830(hdr - first element of header array)B
+1320 10650(k - time series index \(see below\))B
+1320 10470(ksrch - search type \(0 or 1\))B
+1128 10290(description - searches file on unit io for time series with attribute)B
+360 10110(s)B
+1128 9930(which match the search variables input using GFS_SDEF. Searches start)B
+1128 9750(at the k+1 entry so this routine is normally called with k=0 to begin)B
+1128 9570(a search at the beginning of a file. If a time series is found with)B
+1128 9390(attributes which match your search variables then k is the index of)B
+1128 9210(that time series and its header is returned in array hdr. If the end)B
+1128 9030(of a file is detected, k is returned as -1. If a time series is)B
+1128 8850(successfully found, the next call to GFS_SEARCH would use the last)B
+1128 8670(value of k and continue the search at the k+1 entry. ksrch defines th)B
+360 8490(e)B
+1128 8310(type of search to be performed. If ksrch=0, the search is of 'and' ty)B
+360 8130(pe)B
+1128 7950(i.e., if .... and .... is true, I have a match. If ksrch is not equal)B
+360 7770( )B
+1128 7590(to zero, the search is of 'or' type, i.e., if .... or .... is true, I)B
+1128 7410(have a match. Note that if an attribute is repeated, ksrch=0 performs)B
+1128 7230(a search with the logic : )B
+1896 7050(if .... and \(.... or ....\) is true, I have a match.)B
+2952 6870(repeated attribute)B
+840 6510(7\) Notes on using GFS)B
+1128 6150(GFS uses six common blocks, you should avoid duplicating these common)B
+1128 5970(block names in your code :)B
+1512 5790(nm$$$$, hd$$$$, wk$$$$, sr$$$$, st$$$$, at$$$$.)B
+1128 5610(The binary for all these routines is called gfs.lib and can be found)B
+1128 5430(in //bull/users/lfseis/lfrec.dir. An example of the user supplied rou)B
+360 5250(tines)B
+1128 5070(DEFHDR and PRHDR can be found here in usr.ftn. There is also a progra)B
+360 4890(m)B
+1128 4710(for GFS file manipulation called 'iutil', it should be obvious how to)B
+1128 4530(use it.)B
+1128 4350(Remember that GFS files are Apollo directories so they can be )B
+1128 4170(manipulated using shell commands such as dlt,cpt etc.)B
+8688 14070([I have experienced some difficulty with the binder not finding all)B
+8688 13890(routines \(even though it claims it has\). This problem can be cured)B
+8688 13710(by using the librarian e.g. the command lbr -c libname binname  makes)B
+8688 13530(a library of the binary file in binname, libname is then bound in the)B
+8688 13350(usual way instead of binname. gfs.lib is a library])B
+7920 12270(A simple example of how to access series in an existing GFS file sequentially)B
+8496 11910(common/a$/a\(10000\))B
+8496 11730(common/hh$/npts,nsta,nchn,ntyp,jy,jd,jh,jm,sec,si,spare\(20\))B
+8496 11550(dimension head\(30\)     )B
+8496 11370(equivalence \(npts,head\))B
+7920 11190(c)B
+8496 11010(itype=-1)B
+8496 10830(call gfs_opena\(3,'input file',itype,nfl\)  { open existing file on unit 3)B
+8496 10650(if\(nfl.le.0\) goto 10                      { error out if file doesnt exi)B
+7920 10470(st)B
+8496 10290(if\(itype.ne.1\) goto 10                    { error out if not of right ty)B
+7920 10110(pe)B
+7920 9930(c)B
+8496 9750(do 5 ifl=1,nfl                            { loop over time series)B
+8688 9570(call gfs_rwentry\(3,head,a,ifl,'r'\)      { read series number ifl and i)B
+7920 9390(ts header)B
+8688 9210(call prhdr\(ifl,head,itype\)              { print header)B
+7920 9030(c..........................................)B
+7920 8850(c..........................................     { your code here)B
+7920 8670(c..........................................)B
+8304 8490(5 continue                             )B
+7920 8310(c)B
+8208 8130(10 call gfs_close\(3\)                         { close file \(dont forget this)B
+7920 7950(!!\))B
+8496 7770(stop)B
+8496 7590(end)B
+7920 7050(A simple example of how to write series to a GFS file )B
+8496 6690(common/a$/a\(10000\))B
+8496 6510(common/hh$/npts,nsta,nchn,ntyp,jy,jd,jh,jm,sec,si,spare\(20\))B
+8496 6330(dimension head\(30\)     )B
+8496 6150(equivalence \(npts,head\))B
+7920 5970(c)B
+8496 5790(itype=1)B
+8496 5610(call gfs_opena\(3,'input file',itype,ierr\) { open nonexisting file on uni)B
+7920 5430(t 3)B
+8496 5250(if\(ierr.lt.0\) goto 10                      { error out if problem openin)B
+7920 5070(g)B
+7920 4890(c)B
+8496 4710(do 5 ifl=1,nfl                            { loop over time series)B
+7920 4530(c..........................................)B
+7920 4350(c..........................................     { your code here)B
+7920 4170(c..........................................)B
+EndPage
+%%Page: ? 5
+StartPage
+Landscape
+1 F
+360 14790 (doc.gfs        Fri Jan 13 13:33:43 1995        5)B
+0 F
+1128 14430(call gfs_rwentry\(3,head,a,ifl,'w'\)      { write series number ifl and)B
+360 14250( its header)B
+744 14070(5 continue                                  { if ifl is set to zero serie)B
+360 13890(s is appended)B
+360 13710(c)B
+648 13530(10 call gfs_close\(3\)                         { close file \(dont forget thi)B
+360 13350(s!!\))B
+936 13170(stop)B
+936 12990(end)B
+EndPage
+%%Trailer
+EndEnscriptDoc
+EnscriptJob restore
