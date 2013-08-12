@@ -1,0 +1,980 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 24 24 588 768
+%%Title: enscript output
+%%For: Harold Bolton
+%%Creator: GNU enscript 1.5.0
+%%CreationDate: Thu Nov 12 09:24:51 1998
+%%Orientation: Landscape
+%%Pages: (atend)
+%%DocumentMedia: Letter 612 792 0 () ()
+%%DocumentNeededResources: (atend)
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Enscript-Prolog 1.5 0
+%
+% Procedures.
+%
+
+/_S {	% save current state
+  /_s save def
+} def
+/_R {	% restore from saved state
+  _s restore
+} def
+
+/S {	% showpage protecting gstate
+  gsave
+  showpage
+  grestore
+} bind def
+
+/MF {	% fontname newfontname -> -	make a new encoded font
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch 
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+  
+  newfont /FontName newfontname put
+
+  % insert only valid encoding vectors
+  encoding_vector length 256 eq {
+    newfont /Encoding encoding_vector put
+  } if
+  
+  newfontname newfont definefont pop
+} def
+
+/M {moveto} bind def
+/s {show} bind def
+
+/Box {	% x y w h -> -			define box path
+  /d_h exch def /d_w exch def /d_y exch def /d_x exch def
+  d_x d_y  moveto 
+  d_w 0 rlineto 
+  0 d_h rlineto 
+  d_w neg 0 rlineto 
+  closepath
+} def
+
+% Highlight bars.
+/highlight_bars {	% nlines lineheight output_y_margin gray -> -
+  gsave
+    setgray
+    /ymarg exch def
+    /lineheight exch def
+    /nlines exch def
+
+    % This 2 is just a magic number to sync highlight lines to text.
+    0 d_header_y ymarg sub 2 sub translate
+    
+    /cw d_output_w cols div def
+    /nrows d_output_h ymarg 2 mul sub lineheight div cvi def
+
+    % for each column
+    0 1 cols 1 sub {
+      cw mul /xp exch def
+
+      % for each rows
+      0 1 nrows 1 sub {
+        /rn exch def 
+        rn lineheight mul neg /yp exch def
+        rn nlines idiv 2 mod 0 eq {
+	  % Draw highlight bar.  4 is just a magic indentation.
+	  xp 4 add yp cw 8 sub lineheight neg Box fill	  
+	} if
+      } for
+    } for
+    
+  grestore
+} def
+
+% Line highlight bar.
+/line_highlight {	% x y width height gray -> -
+  gsave
+    /gray exch def
+    Box gray setgray fill
+  grestore
+} def
+
+% Column separator lines.
+/column_lines {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h translate
+    /cw d_output_w cols div def
+    1 1 cols 1 sub {
+      cw mul 0 moveto
+      0 d_output_h rlineto stroke
+    } for
+  grestore
+} def
+
+% Column borders.
+/column_borders {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h moveto 
+    0 d_output_h rlineto
+    d_output_w 0 rlineto
+    0 d_output_h neg rlineto
+    closepath stroke
+  grestore
+} def
+
+% Do the actual underlay drawing
+/draw_underlay {
+  ul_style 0 eq {
+    ul_str true charpath stroke
+  } { 
+    ul_str show
+  } ifelse
+} def
+
+% Underlay
+/underlay {	% - -> -
+  gsave
+    0 d_page_h translate
+    d_page_h neg d_page_w atan rotate
+
+    ul_gray setgray
+    ul_font setfont
+    /dw d_page_h dup mul d_page_w dup mul add sqrt def
+    ul_str stringwidth pop dw exch sub 2 div ul_h_ptsize -2 div moveto 
+    draw_underlay
+  grestore
+} def
+
+/user_underlay {	% - -> -
+  gsave
+    ul_x ul_y translate
+    ul_angle rotate
+    ul_gray setgray
+    ul_font setfont 
+    0 0 ul_h_ptsize 2 div sub moveto 
+    draw_underlay
+  grestore
+} def
+
+% Page prefeed
+/page_prefeed {		% bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} def
+
+% EPSF import.
+
+/BeginEPSF {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack 
+  userdict begin
+  /showpage { } def
+  0 setgray 0 setlinecap
+  1 setlinewidth 0 setlinejoin
+  10 setmiterlimit [ ] 0 setdash newpath
+  /languagelevel where {
+    pop languagelevel
+    1 ne {
+      false setstrokeadjust false setoverprint 
+    } if
+  } if
+} bind def
+
+/EndEPSF {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+%%EndResource
+%%BeginResource: procset Enscript-Encoding-latin1 1.5 0
+/encoding_vector [
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclam       	/quotedbl     	/numbersign   	
+/dollar       	/percent      	/ampersand    	/quoteright   	
+/parenleft    	/parenright   	/asterisk     	/plus         	
+/comma        	/hyphen       	/period       	/slash        	
+/zero         	/one          	/two          	/three        	
+/four         	/five         	/six          	/seven        	
+/eight        	/nine         	/colon        	/semicolon    	
+/less         	/equal        	/greater      	/question     	
+/at           	/A            	/B            	/C            	
+/D            	/E            	/F            	/G            	
+/H            	/I            	/J            	/K            	
+/L            	/M            	/N            	/O            	
+/P            	/Q            	/R            	/S            	
+/T            	/U            	/V            	/W            	
+/X            	/Y            	/Z            	/bracketleft  	
+/backslash    	/bracketright 	/asciicircum  	/underscore   	
+/quoteleft    	/a            	/b            	/c            	
+/d            	/e            	/f            	/g            	
+/h            	/i            	/j            	/k            	
+/l            	/m            	/n            	/o            	
+/p            	/q            	/r            	/s            	
+/t            	/u            	/v            	/w            	
+/x            	/y            	/z            	/braceleft    	
+/bar          	/braceright   	/tilde        	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclamdown   	/cent         	/sterling     	
+/currency     	/yen          	/brokenbar    	/section      	
+/dieresis     	/copyright    	/ordfeminine  	/guillemotleft	
+/logicalnot   	/hyphen       	/registered   	/macron       	
+/degree       	/plusminus    	/twosuperior  	/threesuperior	
+/acute        	/mu           	/paragraph    	/bullet       	
+/cedilla      	/dotlessi     	/ordmasculine 	/guillemotright	
+/onequarter   	/onehalf      	/threequarters	/questiondown 	
+/Agrave       	/Aacute       	/Acircumflex  	/Atilde       	
+/Adieresis    	/Aring        	/AE           	/Ccedilla     	
+/Egrave       	/Eacute       	/Ecircumflex  	/Edieresis    	
+/Igrave       	/Iacute       	/Icircumflex  	/Idieresis    	
+/Eth          	/Ntilde       	/Ograve       	/Oacute       	
+/Ocircumflex  	/Otilde       	/Odieresis    	/multiply     	
+/Oslash       	/Ugrave       	/Uacute       	/Ucircumflex  	
+/Udieresis    	/Yacute       	/Thorn        	/germandbls   	
+/agrave       	/aacute       	/acircumflex  	/atilde       	
+/adieresis    	/aring        	/ae           	/ccedilla     	
+/egrave       	/eacute       	/ecircumflex  	/edieresis    	
+/igrave       	/iacute       	/icircumflex  	/idieresis    	
+/eth          	/ntilde       	/ograve       	/oacute       	
+/ocircumflex  	/otilde       	/odieresis    	/divide       	
+/oslash       	/ugrave       	/uacute       	/ucircumflex  	
+/udieresis    	/yacute       	/thorn        	/ydieresis    	
+] def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Courier
+/user_header_p false def
+/HFpt_w 10 def
+/HFpt_h 10 def
+/Courier-Bold /HF-gs-font MF
+/HF /HF-gs-font findfont [HFpt_w 0 0 HFpt_h 0 0] makefont def
+/Courier /F-gs-font MF
+/F-gs-font findfont [8 0 0 8 0 0] makefont setfont
+/#copies 1 def
+%%BeginResource: procset Enscript-Header-simple 1.5 0
+
+/do_header {	% print default simple header
+  gsave
+    d_header_x d_header_y HFpt_h 3 div add translate
+
+    HF setfont
+    user_header_p {
+      5 0 moveto user_header_str show
+    } {
+      5 0 moveto fname show
+      45 0 rmoveto fmodstr show
+      45 0 rmoveto pagenumstr show
+    } ifelse
+
+  grestore
+} def
+%%EndResource
+/d_page_w 744 def
+/d_page_h 564 def
+/d_header_x 0 def
+/d_header_y 549 def
+/d_header_w 744 def
+/d_header_h 15 def
+/d_footer_x 0 def
+/d_footer_y 0 def
+/d_footer_w 744 def
+/d_footer_h 0 def
+/d_output_w 744 def
+/d_output_h 549 def
+/cols 2 def
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 1 def
+/fname (readcmt.f) def
+/fdir () def
+/ftail (readcmt.f) def
+% User defined strings:
+/fmodstr (Mon Oct 12 12:36:19 1998) def
+/pagenumstr (1) def
+%%EndPageSetup
+do_header
+5 538 M
+(c) s
+5 529 M
+(c---------------------------------------------------------) s
+5 520 M
+(c) s
+5 511 M
+(      subroutine readcmt) s
+5 502 M
+(c) s
+5 493 M
+(c Calls readallcmt to read the comprehensive listing of CMT's:) s
+5 484 M
+(c allorder.bin. The file allorder.bin" is prepared by the program dek2bin) s
+5 475 M
+(c and contains both the CMT's from the "allorder.dek" file as well as) s
+5 466 M
+(c CMT's from e-mail.) s
+5 457 M
+(c) s
+5 448 M
+(c One can then obtain the indices of the EQ's which fall within a) s
+5 439 M
+(c desired date range using the subroutine "siftcmt".) s
+5 430 M
+(c) s
+5 421 M
+(c One can then get the info for a specific EQ by accessing the common) s
+5 412 M
+(c block directly, or, the preferred way is to call getcmt and pass it the) s
+5 403 M
+(c index of the EQ you want \(this way your calling program does not need) s
+5 394 M
+(c to declare the common block\).) s
+5 385 M
+(c) s
+5 376 M
+(      parameter \(maxevts=20000\)) s
+5 367 M
+(      common/eqinfo/inum,jy\(maxevts\),jd\(maxevts\),) s
+5 358 M
+(     & jh\(maxevts\),jm\(maxevts\),ess\(maxevts\),eqlat\(maxevts\),) s
+5 349 M
+(     & eqlon\(maxevts\),eqdep\(maxevts\),eqmb\(maxevts\),eqms\(maxevts\),) s
+5 340 M
+(     & eqmw\(maxevts\)) s
+5 331 M
+(c     ) s
+5 322 M
+(      inum = 0) s
+5 313 M
+(      call readallcmt) s
+5 304 M
+(      return) s
+5 295 M
+(      end) s
+5 286 M
+(c) s
+5 277 M
+(c---------------------------------------------------------) s
+5 268 M
+(c) s
+5 259 M
+(      subroutine readcmt_slow) s
+5 250 M
+(c) s
+5 241 M
+(c This calls the rotuine to read the ".dek" version of the big catalog) s
+5 232 M
+(c and the routine to read the quick CMT's from e-mail.) s
+5 223 M
+(c) s
+5 214 M
+(c Assumes that the big CMT catalog \(read by readallcmt\)) s
+5 205 M
+(c is in chronological order. Thus, after calling this routine) s
+5 196 M
+(c we can look at the last EQ in eqinfo and not bother to get) s
+5 187 M
+(c any events before this date out of readqcmt.) s
+5 178 M
+(c) s
+5 169 M
+(      parameter \(maxevts=20000\)) s
+5 160 M
+(      common/eqinfo/inum,jy\(maxevts\),jd\(maxevts\),) s
+5 151 M
+(     & jh\(maxevts\),jm\(maxevts\),ess\(maxevts\),eqlat\(maxevts\),) s
+5 142 M
+(     & eqlon\(maxevts\),eqdep\(maxevts\),eqmb\(maxevts\),eqms\(maxevts\),) s
+5 133 M
+(     & eqmw\(maxevts\)) s
+5 124 M
+(c     ) s
+5 115 M
+(      inum = 0) s
+5 106 M
+(      call readallcmt_dek) s
+5 97 M
+(      call readqcmt\(jy\(inum\),jd\(inum\)\)) s
+5 88 M
+(      return) s
+5 79 M
+(      end) s
+5 70 M
+(c) s
+5 61 M
+(c---------------------------------------------------------) s
+5 52 M
+(c) s
+5 43 M
+(      subroutine readallcmt) s
+5 34 M
+(c) s
+5 25 M
+(c Reads the ".bin" version of the entire big CMT catalog. ) s
+5 16 M
+(c) s
+5 7 M
+(c  NB: inum should be set appropriately before calling) s
+377 538 M
+(c      \(i.e. inum = 0 if nothing in eqinfo common block,) s
+377 529 M
+(c       otherwise set to proper value\)) s
+377 520 M
+(c) s
+377 511 M
+(      character dbsdir*80,cmt_file*256) s
+377 502 M
+(      parameter \(maxevts=20000\)) s
+377 493 M
+(      common/eqinfo/inum,jy\(maxevts\),jd\(maxevts\),) s
+377 484 M
+(     & jh\(maxevts\),jm\(maxevts\),ess\(maxevts\),eqlat\(maxevts\),) s
+377 475 M
+(     & eqlon\(maxevts\),eqdep\(maxevts\),eqmb\(maxevts\),eqms\(maxevts\),) s
+377 466 M
+(     & eqmw\(maxevts\)) s
+377 457 M
+(      logical ex) s
+377 448 M
+(      data iflag/0/) s
+377 439 M
+(      ) s
+377 430 M
+(      if \(iflag.ne.0\) return) s
+377 421 M
+(c     ) s
+377 412 M
+(c construct file name and open file) s
+377 403 M
+(c) s
+377 394 M
+(      call getenv\('HRVDBS',dbsdir\)) s
+377 385 M
+(      cmt_file = dbsdir\(1:lnblnk\(dbsdir\)\)//'/allorder.bin') s
+377 376 M
+(      inquire\(file=cmt_file,exist=ex\)) s
+377 367 M
+(      if \(.not.ex\) then) s
+377 358 M
+(        write\(0,*\) 'ERROR in readallcmt_bin -- cannot open file') s
+377 349 M
+(        stop) s
+377 340 M
+(      endif) s
+377 331 M
+(      iflag = 1) s
+377 322 M
+(c) s
+377 313 M
+(c read through file) s
+377 304 M
+(c) s
+377 295 M
+(      open\(20,file=cmt_file,form='unformatted'\)) s
+377 286 M
+(      inum_beg = inum) s
+377 277 M
+(      i = inum + 1) s
+377 268 M
+(   5  read\(20,end=99\) jy\(i\),jd\(i\),jh\(i\),jm\(i\),ess\(i\),eqlat\(i\),) s
+377 259 M
+(     &            eqlon\(i\),eqdep\(i\),eqmb\(i\),eqms\(i\),eqmw\(i\)) s
+377 250 M
+(c) s
+377 241 M
+(      i = i + 1) s
+377 232 M
+(      goto 5) s
+377 223 M
+(c) s
+377 214 M
+( 99   continue) s
+377 205 M
+(      inum = i - 1) s
+377 196 M
+(      close\(20\)) s
+377 187 M
+(      write\(*,*\) ' ') s
+377 178 M
+(      write\(*,*\) '  # of events in big CMT catalog: ',inum-inum_beg) s
+377 169 M
+(      write\(*,*\) ' ') s
+377 160 M
+(100   continue) s
+377 151 M
+(      return) s
+377 142 M
+(      end) s
+377 133 M
+(c) s
+377 124 M
+(c---------------------------------------------------------) s
+377 115 M
+(c) s
+377 106 M
+(      subroutine readallcmt_dek) s
+377 97 M
+(c) s
+377 88 M
+(c Reads the ".dek" version of the entire big CMT catalog.) s
+377 79 M
+(c) s
+377 70 M
+(c Typically, this is only used by the program that converts the) s
+377 61 M
+(c .dek format to the .bin format. ) s
+377 52 M
+(c) s
+377 43 M
+(c  NB: inum should be set appropriately before calling) s
+377 34 M
+(c      \(i.e. inum = 0 if nothing in eqinfo common block,) s
+377 25 M
+(c       otherwise set to proper value\)) s
+377 16 M
+(c) s
+377 7 M
+(      character dbsdir*80,cmt_file*256) s
+_R
+S
+%%Page: (2) 2
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 2 def
+/fname (readcmt.f) def
+/fdir () def
+/ftail (readcmt.f) def
+% User defined strings:
+/fmodstr (Mon Oct 12 12:36:19 1998) def
+/pagenumstr (2) def
+%%EndPageSetup
+do_header
+5 538 M
+(      parameter \(maxevts=20000\)) s
+5 529 M
+(      common/eqinfo/inum,jy\(maxevts\),jd\(maxevts\),) s
+5 520 M
+(     & jh\(maxevts\),jm\(maxevts\),ess\(maxevts\),eqlat\(maxevts\),) s
+5 511 M
+(     & eqlon\(maxevts\),eqdep\(maxevts\),eqmb\(maxevts\),eqms\(maxevts\),) s
+5 502 M
+(     & eqmw\(maxevts\)) s
+5 493 M
+(      real*8 ept) s
+5 484 M
+(      logical ex) s
+5 475 M
+(      data iflag/0/) s
+5 466 M
+(      ) s
+5 457 M
+(      if \(iflag.ne.0\) return) s
+5 448 M
+(c     ) s
+5 439 M
+(c construct file name and open file) s
+5 430 M
+(c) s
+5 421 M
+(      call getenv\('HRVDBS',dbsdir\)) s
+5 412 M
+(      cmt_file = dbsdir\(1:lnblnk\(dbsdir\)\)//'/allorder.dek') s
+5 403 M
+(      inquire\(file=cmt_file,exist=ex\)) s
+5 394 M
+(      if \(.not.ex\) then) s
+5 385 M
+(        write\(0,*\) 'ERROR in readallcmt -- cannot open file') s
+5 376 M
+(        stop) s
+5 367 M
+(      endif) s
+5 358 M
+(c) s
+5 349 M
+(c read through file) s
+5 340 M
+(c) s
+5 331 M
+(      iflag = 1) s
+5 322 M
+(      open\(20,file=cmt_file\)) s
+5 313 M
+(      inum_beg = inum) s
+5 304 M
+(      i = inum + 1) s
+5 295 M
+(   5  read\(20,20,end=99\) jmo,jmd,jy\(i\),jh\(i\),jm\(i\),) s
+5 286 M
+(     &   ess\(i\),eqlat\(i\),eqlon\(i\),eqdep\(i\),eqmb\(i\),eqms\(i\)) s
+5 277 M
+(      read\(20,21,end=98\) delt,err1,cmtlat,err2,cmtlon,err3,cmtdep) s
+5 268 M
+(      read\(20,22,end=98\) dur,iex,\(f,j=1,6\)) s
+5 259 M
+(      read\(20,*,end=98\) \(x,m,n,j=1,3\), xm,strike,dip,rake) s
+5 250 M
+(      eqmw\(i\) = 2.0 * alog10\(xm*10.0**iex\) / 3.0 - 10.7) s
+5 241 M
+(c) s
+5 232 M
+(      jy\(i\) = jy\(i\) + 1900) s
+5 223 M
+(      call caljul\(jy\(i\),jmo,jmd,jd\(i\)\)) s
+5 214 M
+(c) s
+5 205 M
+(c use centroid source time, lat, long, and depth) s
+5 196 M
+(c) s
+5 187 M
+(      call dat2ep\(jy\(i\),jd\(i\),jh\(i\),jm\(i\),ess\(i\),ept\)) s
+5 178 M
+(      ept = ept + delt) s
+5 169 M
+(      call ep2dat\(ept,jy\(i\),jd\(i\),jh\(i\),jm\(i\),ess\(i\)\)) s
+5 160 M
+(      eqlat\(i\) = cmtlat) s
+5 151 M
+(      eqlon\(i\) = cmtlon) s
+5 142 M
+(      eqdep\(i\) = cmtdep) s
+5 133 M
+(c      ) s
+5 124 M
+(      i = i + 1) s
+5 115 M
+(      if \(i.gt.maxevts\) then) s
+5 106 M
+(        write\(0,*\) 'ERROR -- readallcmt_dek: too many events') s
+5 97 M
+(        stop) s
+5 88 M
+(      endif) s
+5 79 M
+(      goto 5) s
+5 70 M
+(c) s
+5 61 M
+( 20   format\(9x,5\(i2,1x\),f4.1,f7.2,f8.2,f6.1,2f3.1\)) s
+5 52 M
+( 21   format\(33x,f6.1,f4.1,f7.2,f5.2,f8.2,f5.2,f6.1\)) s
+5 43 M
+( 22   format\(4x,f4.1,3x,i3,6\(f6.2,5x\)\)     ) s
+5 34 M
+(c ) s
+5 25 M
+( 98   write\(0,*\) 'WARNING in readallcmt - encountered unexpected EOF') s
+5 16 M
+( 99   continue) s
+5 7 M
+(      inum = i - 1) s
+377 538 M
+(      close\(20\)) s
+377 529 M
+(      write\(*,*\) ' ') s
+377 520 M
+(      write\(*,*\) '  # of events in big CMT catalog: ',inum-inum_beg) s
+377 511 M
+(      write\(*,*\) ' ') s
+377 502 M
+(100   continue) s
+377 493 M
+(      return) s
+377 484 M
+(      end) s
+377 475 M
+(c) s
+377 466 M
+(c---------------------------------------------------------) s
+377 457 M
+(c) s
+377 448 M
+(      subroutine readqcmt\(iy,id\)) s
+377 439 M
+(c) s
+377 430 M
+(c Reads a portion of an e-mail folder containing Harvard quick CMT's. Only) s
+377 421 M
+(c reads CMT's which are after the year and day specified. ) s
+377 412 M
+(c This routine is really designed to just augment a complete) s
+377 403 M
+(c CMT catalog by reading recent CMT's from e-mail.) s
+377 394 M
+(c) s
+377 385 M
+(c One can then extract the source parameters for a) s
+377 376 M
+(c desired date range using the subroutine "siftcmt".) s
+377 367 M
+(c) s
+377 358 M
+(c input:) s
+377 349 M
+(c) s
+377 340 M
+(c  iy,id = year and julian day cutoff. Do not read CMT's) s
+377 331 M
+(c          which fall before or on this date.) s
+377 322 M
+(c) s
+377 313 M
+(c NB: expects inum to be initialized to the appropriate value \(i.e.) s
+377 304 M
+(c     this routine will just append to eqinfo.) s
+377 295 M
+(c) s
+377 286 M
+(      character ins*1,iew*1,string*256) s
+377 277 M
+(      parameter \(maxevts=20000\)) s
+377 268 M
+(      common/eqinfo/inum,jy\(maxevts\),jd\(maxevts\),) s
+377 259 M
+(     & jh\(maxevts\),jm\(maxevts\),ess\(maxevts\),eqlat\(maxevts\),) s
+377 250 M
+(     & eqlon\(maxevts\),eqdep\(maxevts\),eqmb\(maxevts\),eqms\(maxevts\),) s
+377 241 M
+(     & eqmw\(maxevts\)) s
+377 232 M
+(      data iflag/0/) s
+377 223 M
+(c  ) s
+377 214 M
+(c only read catalog if necessary ) s
+377 205 M
+(c  ) s
+377 196 M
+(      if \(iflag.ne.0\) return) s
+377 187 M
+(c) s
+377 178 M
+(      iflag = 1) s
+377 169 M
+(      open\(20,file='/home/woodward/mail.dir/CMT'\)) s
+377 160 M
+(      inum_beg = inum) s
+377 151 M
+( 10   read\(20,'\(a\)',end=99\) string) s
+377 142 M
+(      if \(string\(1:23\).eq.'HARVARD EVENT-FILE NAME'\) then) s
+377 133 M
+(        inum = inum + 1) s
+377 124 M
+(        read\(string,11,end=98\) km,kd,jy\(inum\)) s
+377 115 M
+(        jy\(inum\) = jy\(inum\) + 1900) s
+377 106 M
+(        call caljul\(jy\(inum\),km,kd,jd\(inum\)\)) s
+377 97 M
+(        if \(jy\(inum\).lt.iy .or. ) s
+377 88 M
+(     &      \(jy\(inum\).eq.iy .and. jd\(inum\).le.id\) \) then) s
+377 79 M
+(          inum = inum - 1) s
+377 70 M
+(          goto 10) s
+377 61 M
+(        endif) s
+377 52 M
+( 20     read\(20,'\(a\)',end=98\) string) s
+377 43 M
+(        if \(string\(1:11\).ne.'ORIGIN TIME'\) goto 20) s
+377 34 M
+(        read\(string,12\) jh\(inum\),jm\(inum\),ess\(inum\)) s
+377 25 M
+(        read\(20,'\(a\)',end=98\) string) s
+377 16 M
+(        read\(string,13\) eqlat\(inum\),ins,eqlon\(inum\),iew) s
+377 7 M
+(        read\(20,'\(a\)',end=98\) string) s
+_R
+S
+%%Page: (3) 3
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 3 def
+/fname (readcmt.f) def
+/fdir () def
+/ftail (readcmt.f) def
+% User defined strings:
+/fmodstr (Mon Oct 12 12:36:19 1998) def
+/pagenumstr (3) def
+%%EndPageSetup
+do_header
+5 538 M
+(        read\(string,14\) eqdep\(inum\)) s
+5 529 M
+(        do 21 i=1,9) s
+5 520 M
+( 21        read\(20,'\(a\)',end=98\) string) s
+5 511 M
+(        read\(string,15\) eqm0,iexp) s
+5 502 M
+(        eqmw\(inum\) = 2.0 * alog10\(eqm0*10.0**iexp\) / 3.0 - 10.7) s
+5 493 M
+(        if \(ins.eq.'S'\) eqlat\(inum\) = -1.0 * eqlat\(inum\)) s
+5 484 M
+(        if \(iew.eq.'W'\) eqlon\(inum\) = -1.0 * eqlon\(inum\)) s
+5 475 M
+(        eqmb\(inum\) = 0.0) s
+5 466 M
+(        eqms\(inum\) = 0.0) s
+5 457 M
+(      endif) s
+5 448 M
+(      if \(inum.eq.maxevts\) then) s
+5 439 M
+(        write\(0,*\) 'ERROR -- readqcmt: too many cmts') s
+5 430 M
+(        stop) s
+5 421 M
+(      endif) s
+5 412 M
+(      goto 10) s
+5 403 M
+(      ) s
+5 394 M
+( 11   format\(25x,3i2\)     ) s
+5 385 M
+( 12   format\(18x,i2,1x,i2,1x,f4.1\)) s
+5 376 M
+( 13   format\(3x,f6.2,a1,9x,f7.2,a1\)) s
+5 367 M
+( 14   format\(3x,f6.1\)) s
+5 358 M
+( 15   format\(22x,f3.1,5x,i2\)) s
+5 349 M
+( ) s
+5 340 M
+( 98   write\(0,*\) 'ERROR in readcmt - encountered unexpected EOF') s
+5 331 M
+( 99   continue) s
+5 322 M
+(      close\(20\)) s
+5 313 M
+(      write\(*,*\) ' ') s
+5 304 M
+(      write\(*,*\) '  # of events in quick CMT catalog: ',inum-inum_beg) s
+5 295 M
+(      write\(*,*\) ' ') s
+5 286 M
+(100   continue) s
+5 277 M
+(      return) s
+5 268 M
+(      end) s
+5 259 M
+(c) s
+5 250 M
+(c---------------------------------------------------------) s
+5 241 M
+(c) s
+5 232 M
+(      subroutine getcmt\(indx,iy,id,ih,im,ss,qlat,qlon,qdep,qmb,qms,qmw\)) s
+5 223 M
+(c) s
+5 214 M
+(c reads the specified event from the catalog stored in common "eqinfo".) s
+5 205 M
+(c Returns the parameters for this event.) s
+5 196 M
+(c      ) s
+5 187 M
+(      parameter \(maxevts=20000\)) s
+5 178 M
+(      common/eqinfo/inum,jy\(maxevts\),jd\(maxevts\),) s
+5 169 M
+(     & jh\(maxevts\),jm\(maxevts\),ess\(maxevts\),eqlat\(maxevts\),) s
+5 160 M
+(     & eqlon\(maxevts\),eqdep\(maxevts\),eqmb\(maxevts\),eqms\(maxevts\),) s
+5 151 M
+(     & eqmw\(maxevts\)) s
+5 142 M
+(c) s
+5 133 M
+(      if \(indx.lt.1 .or. indx.gt.inum\) then) s
+5 124 M
+(        write\(0,*\) 'ERROR -- index in getcmt out of range') s
+5 115 M
+(        stop) s
+5 106 M
+(      endif) s
+5 97 M
+(      iy = jy\(indx\)) s
+5 88 M
+(      id = jd\(indx\)) s
+5 79 M
+(      ih = jh\(indx\)) s
+5 70 M
+(      im = jm\(indx\)) s
+5 61 M
+(      ss = ess\(indx\)) s
+5 52 M
+(      qlat = eqlat\(indx\)) s
+5 43 M
+(      qlon = eqlon\(indx\)) s
+5 34 M
+(      qdep = eqdep\(indx\)) s
+5 25 M
+(      qmb  = eqmb\(indx\)) s
+5 16 M
+(      qms  = eqms\(indx\)) s
+5 7 M
+(      qmw  = eqmw\(indx\)) s
+377 538 M
+(      return) s
+377 529 M
+(      end) s
+377 520 M
+(      ) s
+_R
+S
+%%Trailer
+%%Pages: 3
+%%DocumentNeededResources: font Courier-Bold Courier 
+%%EOF
