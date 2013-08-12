@@ -18,7 +18,6 @@ MEMBERS = \
 	lib$(LIB).a(panlsp.o) \
 	lib$(LIB).a(realtr.o) \
 	lib$(LIB).a(rltrdp.o) \
-	lib$(LIB).a(sroida.o) \
 	lib$(LIB).a(allsta_new.o)
 
 lib$(LIB).a:: $(MEMBERS)

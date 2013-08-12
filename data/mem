@@ -1,0 +1,26 @@
+*=====================================================================
+* COMMON FOR:  Memory management (mainly data file storage.)
+*=====================================================================
+* PARAMETERS:
+*   MMEM:   Size of sacmem array. [i]
+*   MEPSL:  Size of smallest retained block in memory manager. [i]
+*=====================================================================
+*   sacmem:  This is the array used store blocks containing headers,
+*            data, scratch space, etc.. Blocks are allocated and 
+*            deallocated from this array as needed. [f]
+*   isacmem: Integer array equivalenced to sacmem. Used when the 
+*            allocated block must be treated as an integer. [i]
+*=====================================================================
+* MODIFICATION HISTORY:
+*    900301:  Increased the size of the SACMEM array.
+*             Deleted some obsolete variables from common block.
+*    860926:  Decreased the size of the SACMEM array.
+*    820830:  Restructured to conform to FORTRAN 77 specifications.
+*    810723:  Merged CMMEM1 and CMMEM2 and removed from DFM.
+*=====================================================================
+
+      parameter (MMEM=2000000, MEPSL=100)
+
+      common /cmmem/ sacmem(MMEM)
+      dimension isacmem(MMEM)
+      equivalence (sacmem(1),isacmem(1))

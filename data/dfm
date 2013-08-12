@@ -1,0 +1,173 @@
+*=====================================================================
+* COMMON FOR:  Data File Module.
+*=====================================================================
+* MODIFICATION HISTORY:
+*    920618:  Changed MXDSFLNM from 50 to 80.
+*    920501:  Added kecmem to control memory save/delete on readerr.
+*    920410:  Bugfix, had character variables in cmdfm common.
+*             Should have been in kmdfm. Not a problem on the SUN,
+*             but the IBM RISC 6000 fortran compiler version 1.3
+*             got it's text space all screwed up.
+*    920402:  Bugfix, changed incds to dimension mdfl.
+*    911015:  Added nflncds array, count of files in each data-set.
+*    910828:  Made ncdsndx an array and added ncdscnt and mcdscnt
+*             to allow multiple (up to mcdscnt) current data-sets.
+*    910809:  Added data structures for multiple Data Sets.
+*               Copies of primary storage structures/variables are:
+*                 ndsxdta, ndslndta, ndsxhdr, ndslnhdr, ndscomp
+*               New structures/variables are:
+*                 kdsname, kdsnm, kpdsnm, ndsndx, ncdsndx, 
+*                 mdsnmcnt, ndsflcnt, kdsflnm, incds, lnewds, 
+*                 kdsdfl, nkdflkup
+*
+*    870625:  Added datagen and default read and write directories.
+*    860918:  Changed to character lists for data file list storage.
+*    850415:  Major restructuring due to new memory manager.
+*    830927:  Moved XLIM rtw variables to GAM common block.
+*    820830:  Restructured to conform to FORTRAN 77 specifications.
+*    820818:  Moved file id variables from GEM to here.
+*    820806:  Changed WRFMT to LWRSAC.  Added LOVRRQ.
+*    820623:  Changed format for storing x limits.
+*    810723:  Remove CMMEM to separate insert file.
+*=====================================================================
+
+* - Variables used while reading files into memory.
+
+      common /cmdfr/ nstart(mdfl), nfillb(mdfl)
+      common /cmdfr/ nstop(mdfl),  nfille(mdfl)
+      common /cmdfr/ ntotal(mdfl)
+      common /cmdfr/ nxsdd(mdfl)
+
+* - Variables used to access data while in memory.
+
+      common /cmdfm/ ndfl, idflc
+      common /cmdfm/ linmem, lrqmem, imemry, iinmem, ibuffr
+
+* - Parameters used for data sets
+*   mdsl:     Maximum number of defined data sets.
+*             IF CHANGING THIS... SEE DATA STATEMENT IN setcdsindeces.f
+*   mcdscnt:  Maximum number of allowed current data-sets.
+*   mlnkdsnm: Maximum length of a data-set name
+*   mxdsflnm: Maximum length of a file name.
+*   mkdflkup: NOT USED -- YET. See nkdflkup.
+      parameter (mdsl=13, mcdscnt=13, mlnkdsnm=32, mxdsflnm=80) 
+*     parameter (mkdflkup=100)
+
+* - Variables used for data sets.
+*   kdsname:  Array of names of the data sets
+*   kdsnm:    Requested data set
+*   kpdsnm:   Name of previously requested data set.
+*   ndsndx:   Index of which data set in kdsname the file belongs to
+*   ncdsndx:  Indices of current data sets in kdsname
+*   ncdscnt:  Number of current data-sets
+*   ndsnmcnt: Maximum position in kdsname to searched to when 
+*             locating, adding or deleting a data set.
+*
+*   ndsflcnt: Maximum position in the data set storage to search to
+*             when inserting, locating or deleting files.
+*   nflncds:  Count of the number of files in each data-set.
+*             Added 10/15/91 to make fft handle multiple data-sets.
+*   kdsflnm   Names of files in memory - as an array.
+*   incds:    Flag for a file belonging to the current data set.
+*             The position in the data set. Set to a negative value
+*             when the data set is currently active.
+*   ldschg:   Logical flag set TRUE if changing to previous data set.
+*   kdsdfl:   Names of the files in memory - as a character list.
+*               Not being used yet.
+*               
+*   nkdflkup: Not being used yet. Intended for position and count, in 
+*               the kdsdfl character list of names for files associated 
+*               with a data set.
+*               First position would indicate how many times a read more
+*               has been performed in the data set. Subsequent pairs
+*               would be: number (space-delimited word) of the
+*               first file name in the list and the number of 
+*               subsequent file names for each read operation.
+*               The book-keeping started to sound awful, so I just stuff
+*               file names into the kdsflnm array.
+*
+      character*(mxdsflnm) kdsflnm
+      character*(mlnkdsnm) kdsname, kdsnm, kpdsnm
+      common /kmdfm/ kdsflnm(mdfl)
+      common /kmdfm/ kdsname(mdsl), kdsnm, kpdsnm
+      common /cmdfm/ incds(mdfl), ndsndx(mdfl)
+      common /cmdfm/ ncdsndx(mcdscnt), ncdscnt, ndsnmcnt, ndsflcnt
+      common /cmdfm/ nflncds(mdsl), ldschg
+*     common /cmdfm/ nkdflkup(mdsl,mkdflkup)
+
+*   (Length of character lists used to store names of data files is set
+*   to half the product of the maximum number of files times the maximum
+*   length of each file name. This should be enough -- AND IS WAY TOO LONG!)
+
+      character*(mdfl*mcpfn/2) kdfl, kdflrq, kdirfl
+      character*(mcpfn) kdirnm, krddir, kwrdir, krdcssdir
+      common /kmdfm/ kdfl, kdflrq
+      common /kmdfm/ krddir, kwrdir
+      common /kmdfm/ krdcssdir, kcssvers, kvers_read,
+     &		     lgain, kgain, lbandw, kbandw, lorient, korient
+      common /kmdfm/ kdirnm, kdirfl
+      common /cmdfm/ ncdir, lechof
+
+      parameter (mcomp=2)
+      common /cmdfm/ ndxhdr(mdfl), nlnhdr(mdfl)
+      common /cmdfm/ ndsxhdr(mdfl), ndslnhdr(mdfl)
+      common /cmdfm/ ndxdta(mcomp,mdfl), nlndta(mdfl), ncomp(mdfl)
+      common /cmdfm/ ndsxdta(mcomp,mdfl), ndslndta(mdfl), ndscomp(mdfl)
+      common /cmdfm/ lactal, lactdf(mdfl)
+
+* - Variables used while writing files to disk.
+
+      character*(mdfl*mcpfn/2) kwfl
+      common /kmdfm/ kwfl
+      character*(2) ksuffx
+      common /kmdfm/ ksuffx(mdfl)
+      common /cmdfm/ nwfl, lovrrq, lzdfl
+
+* - Variables used for CUT command and options.
+
+      common /cmdfm/ lcut, ocut(2)
+      common /kmdfm/ kcut(2)
+      parameter (mcuter=3)
+      common /kmdfm/ kcuter(mcuter)
+      common /cmdfm/ icuter
+
+      common /kmdfm/ kecbdf, kecmem
+      common /cmdfm/ rdfmt, lwrsac, fmtsoc, fmtsac, fmtds2, fmtci
+      parameter (mrwfmt=5)
+      common /cmdfm/ nrwfmt, irfmt, iwfmt
+      common /kmdfm/ krwfmt(mrwfmt)
+      character kcfile*(mcpfn)
+      common /kmdfm/ kcfile(2), kcfmt(2)
+      common /cmdfm/ icfmt(2)
+
+* - Variables used to associate time pick names with header values.
+
+      parameter (mpick=18)
+      common /cmdfm/ nsamp
+      common /kmdfm/ kpick(mpick)
+      common /cmdfm/ ipckn, ipckz, ipckg, ipckb, ipcke, ipcko, ipcka
+      common /cmdfm/ ipckt0, ipckt1, ipckt2, ipckt3, ipckt4
+      common /cmdfm/ ipckt5, ipckt6, ipckt7, ipckt8, ipckt9, ipckf
+      common /cmdfm/ ipckhd(mpick)
+
+* - Common for SYNCH command.
+
+      common /cmdfm/ lround
+
+* - Common for COPYHDR command.
+
+      parameter (mhdrco=20)
+      common /cmdfm/ icatco(mhdrco), itemco(mhdrco)
+
+* - Common for READALPHA command.
+
+      character*(mcmsg) kdcont, kdform
+      common /kmdfm/ kdcont, kdform
+      common /cmdfm/ ldfree
+
+* - Common for DATAGEN command.
+
+      parameter (mdgsub=3)
+      character kdgsub*(mcpw), kdgfil*(mcmsg)
+      common /kmdfm/ kdgsub(mdgsub), kdgfil
+      common /cmdfm/ idgsub, ndgfil
