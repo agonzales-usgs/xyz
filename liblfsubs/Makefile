@@ -6,7 +6,7 @@ LIB=lfsubs
 	$(FC) -c $(FFLAGS) $<
 	ar rv $@ $*.o
 	rm -f $*.o
-	mv lib$(LIB).a ../libs
+	
 
 MEMBERS = \
 	lib$(LIB).a(facdwn.o) \
@@ -23,6 +23,9 @@ MEMBERS = \
 	lib$(LIB).a(allsta_new.o)
 
 lib$(LIB).a:: $(MEMBERS)
+
+install:
+	mv lib$(LIB).a ../libs
 
 clean:
 	rm *.o lib$(LIB).a

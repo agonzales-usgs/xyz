@@ -6,7 +6,6 @@ LIB= scr
 lib$(LIB) : scr1.o leolib.o psscreendump.o
 	ar cr lib$(LIB).a scr1.o leolib.o psscreendump.o
 	rm -f *.o 
-	mv lib$(LIB).a ../libs
 
 scr1.o : scr1.f
 	$(FC) -c scr1.f
@@ -16,6 +15,9 @@ leolib.o : leolib.c
 
 psscreendump.o : psscreendump.f
 	$(FC) -c psscreendump.f
+
+install:
+	mv lib$(LIB).a ../libs
 
 clean: 
 	rm *.o libscr.a

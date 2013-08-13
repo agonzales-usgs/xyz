@@ -5,7 +5,6 @@ FC= gfortran
 	$(FC) -c  $(FFLAGS) $<
 	ar rv $@ $*.o
 	rm -f $*.o
-	mv lib$(LIB).a ../libs
 
 MEMBERS = \
 	lib$(LIB).a(atant.o) \
@@ -45,7 +44,9 @@ MEMBERS = \
 	lib$(LIB).a(siftcmt.o) 
 
 lib$(LIB).a:: $(MEMBERS)
-lib$(LIB).a:: ; touch lib$(LIB).a
+
+install:
+	mv lib$(LIB).a ../libs
 
 clean: 
 	rm lib$(LIB).a
