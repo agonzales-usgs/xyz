@@ -1,13 +1,14 @@
 #
 # note use of "-e" for extended ling length
 #
-LIB= qc_data
+LIB= data
 FC= gfortran
 FFLAGS= -libmil -O3 -fcray-pointer -ffixed-line-length-none -std=legacy
 
 .f.a:
 	$(FC) -c  $(FFLAGS) $<
 	ar rv $@ $*.o
+	rm -f $*.o
 
 MEMBERS = \
 	lib$(LIB).a(atant.o) \

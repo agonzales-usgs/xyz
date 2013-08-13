@@ -1,11 +1,11 @@
-# GTM Nov. 24, 2003 - removed source_ram
-LIB=qc_gen
+LIB=gen
 FC= gfortran
 FFLAGS= -O3 -libmil -std=legacy
 
 .f.a:
 	$(FC) -c  $(FFLAGS) $<
 	ar rv $@ $*.o
+	rm -f $*.o
 
 MEMBERS = \
 	lib$(LIB).a(calmo.o) \
