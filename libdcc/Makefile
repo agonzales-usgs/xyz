@@ -5,6 +5,7 @@ FC= gfortran
 	$(FC) -c  $(FFLAGS) $<
 	ar rv $@ $*.o
 	rm -f $*.o
+	mv lib$(LIB).a ../libs
 
 MEMBERS = \
 	lib$(LIB).a(atant.o) \

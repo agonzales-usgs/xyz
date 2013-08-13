@@ -1,10 +1,12 @@
 FC= gfortran
 FFLAGS= -O3 -libmil -ffixed-line-length-none
-LIB=qc_lfsubs
+LIB=lfsubs
 
 .f.a:
 	$(FC) -c $(FFLAGS) $<
 	ar rv $@ $*.o
+	rm -f $*.o
+	mv lib$(LIB).a ../libs
 
 MEMBERS = \
 	lib$(LIB).a(facdwn.o) \

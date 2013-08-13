@@ -6,6 +6,7 @@ FFLAGS= -O3 -libmil -std=legacy
 	$(FC) -c  $(FFLAGS) $<
 	ar rv $@ $*.o
 	rm -f $*.o
+	mv lib$(LIB).a ../libs
 
 MEMBERS = \
 	lib$(LIB).a(calmo.o) \

@@ -9,6 +9,7 @@ FFLAGS= -libmil -O3 -fcray-pointer -ffixed-line-length-none -std=legacy
 	$(FC) -c  $(FFLAGS) $<
 	ar rv $@ $*.o
 	rm -f $*.o
+	mv lib$(LIB).a ../libs
 
 MEMBERS = \
 	lib$(LIB).a(atant.o) \

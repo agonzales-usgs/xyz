@@ -1,3 +1,4 @@
+LIB= iaspei
 FC= gfortran
 FFLAGS= -libmil
 LFLAGS= -L$(LIBDIR)
@@ -8,12 +9,14 @@ LFLAGS= -L$(LIBDIR)
 .f.a:
 	$(FC) $(FFLAGS) -c   $<
 	ar rv $@ $*.o
+	rm -f $*.o
+	mv lib$(LIB).a ../libs
 
-libqc_iaspei.a: \
-	libqc_iaspei.a(libtau.o) \
-	libqc_iaspei.a(libbuland.o) 
+lib$(LIB).a: \
+	lib$(LIB).a(libtau.o) \
+	lib$(LIB).a(libbuland.o) 
 
-libqc_iaspei.a(libtau.o): ttlim.inc
+lib$(LIB).a(libtau.o): ttlim.inc
 
 clean: 
-	rm *.o libqc_iaspei.a
+	rm *.o lib$(LIB).a

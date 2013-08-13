@@ -6,6 +6,7 @@ CCFLAGS=
 gfs : gfs.o usr.o disk.o
 	ar cr lib$(LIB).a gfs.o usr.o disk.o
 	rm -f gfs.o usr.o disk.o
+	mv lib$(LIB).a ../libs
 
 gfs.o : gfs.f
 	$(FC) $(FCFLAGS) -c gfs.f
